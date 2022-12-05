@@ -8,6 +8,7 @@
 /.umi-production
 /.umi-test
 /dist
+/.idea
 /.mfsu
 pnpm-lock.yaml
 /src/renderer/.umi
