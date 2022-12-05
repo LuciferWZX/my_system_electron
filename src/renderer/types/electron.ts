@@ -1,0 +1,19 @@
+interface ElectronVersion{
+  ares:string
+  brotli:string
+  chrome:string
+  cldr:string
+  electron:string
+  icu:string
+  llhttp:string
+  modules:string
+  napi:string
+  nghttp2:string
+  node:string
+  openssl:string
+  tz:string
+  unicode:string
+  uv:string
+  v8:string
+  zlib:string
+}
