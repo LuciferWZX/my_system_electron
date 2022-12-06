@@ -3,4 +3,5 @@ export enum IconType {
     close="icon-close-bold",
     minus="icon-minus-bold",
     exitMaxmize="icon-FullScreenZoom-1",
+    colorChat="icon-chat",
 }

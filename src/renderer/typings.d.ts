@@ -5,6 +5,7 @@ declare global {
     "electron"?: {
       versions:ElectronVersion
       appAction:(channel:"min"|"max"|"close")=>void
+      platform:NodeJS.Platform
     },
   }
 }

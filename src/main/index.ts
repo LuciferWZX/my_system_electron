@@ -26,6 +26,7 @@ if (!gotTheLock) {
       minHeight: 300,
       frame:false,
       show:false,
+      titleBarStyle:"hidden",
       webPreferences: {
         contextIsolation: true,
         preload: path.join(__dirname, 'preload.js'),
@@ -37,6 +38,7 @@ if (!gotTheLock) {
       win.loadURL(`file://${winURL}`).then()
     }else{
       win.loadURL('http://localhost:8083').then();
+      win.webContents.openDevTools()
     }
 
     win.on('closed', () => { mainWindow = null; })

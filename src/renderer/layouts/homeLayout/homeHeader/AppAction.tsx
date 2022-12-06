@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {Button} from "antd";
 import {IconFont, IconType} from "@/components";
-import {StyledAppAction} from "@/layouts/homeLayout/HomeHeader/style";
+import {StyledAppAction} from "@/layouts/homeLayout/homeHeader/style";
 
 const AppAction:FC = () => {
     const headerAction = (action:"min"|"max"|"close") => {

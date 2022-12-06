@@ -18,12 +18,12 @@ export default (win:BrowserWindow)=>{
     })
 
     // 最小化
-    ipcMain.on("min", function () {
+    ipcMain.handle("min", function () {
         win.minimize()
     })
 
     // 最大化
-    ipcMain.on("max", function () {
+    ipcMain.handle("max", function () {
         if (win.isMaximized()) {
             win.unmaximize()
         } else {
@@ -32,7 +32,7 @@ export default (win:BrowserWindow)=>{
     })
 
     // 关闭程序
-    ipcMain.on("close", function () {
+    ipcMain.handle("close", function () {
         cacheDownItemClose()
         win.close();
     })
