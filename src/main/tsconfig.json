@@ -20,5 +20,8 @@
       "@/common": ["../common"],
       "@/common/*": ["../common/*"]
     }
-  }
+  },
+  "include": [
+    "global.d.ts"
+  ]
 }

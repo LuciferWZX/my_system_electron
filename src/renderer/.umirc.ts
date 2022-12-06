@@ -1,4 +1,5 @@
 import { defineConfig } from 'umi';
+import routes from "./config/route";
 
 export default defineConfig({
   npmClient: 'pnpm',
@@ -8,11 +9,12 @@ export default defineConfig({
     '@umijs/plugins/dist/model',
   ],
   model:{},
+  routes:routes,
   initialState: {},
   electronBuilder: {
     rendererTarget: 'web',
     builderOptions: {
-      appId: 'com.test.test',
+      appId: 'com.wzx.electron',
       productName: '测试',
       publish: [
         {

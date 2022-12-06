@@ -1,22 +1,12 @@
-import React from 'react';
-import { Link, Outlet } from 'umi';
-import styles from './index.less';
+import React, {FC} from 'react';
+import { Outlet } from 'umi';
+import {FullBox} from "@/styles/FullBox";
 
-export default function Layout() {
-  return (
-    <div className={styles.navs}>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/docs">Docs</Link>
-        </li>
-        <li>
-          <a href="https://github.com/umijs/umi">Github</a>
-        </li>
-      </ul>
-      <Outlet />
-    </div>
-  );
+const Layout:FC=()=>{
+    return (
+        <FullBox>
+            <Outlet />
+        </FullBox>
+    );
 }
+export default Layout
