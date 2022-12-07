@@ -10,12 +10,20 @@ export const StyledHome = styled(FullBox)`
 export const StyledHomeSider = styled(Layout.Sider)`
     height: 100%;
   border-inline-end: 1px solid rgba(5, 5, 5, 0.06);
-  padding: 0 5px;
+  padding:5px;
+  
   .sider-badge{
     width: 100%;
   }
   .ant-badge-count{
     padding: 0 4px;
+  }
+  .sider-layout{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+   
+    height: 100%;
   }
 `
 export const StyledHomeContent = styled(Layout)`

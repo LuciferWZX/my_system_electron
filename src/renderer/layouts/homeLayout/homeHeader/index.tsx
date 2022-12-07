@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import {StyledHomeHeader} from "@/layouts/homeLayout/style";
 import {theme} from "antd";
 import AppAction from "@/layouts/homeLayout/homeHeader/AppAction";
@@ -6,7 +6,7 @@ import {useModel} from "foca";
 import appStore from "@/stores/app.store";
 import HeaderAvatar from "@/layouts/homeLayout/homeHeader/headerAvatar";
 
-const Index = () => {
+const HomeHeader:FC = () => {
   const {isMac,isWin}=useModel(appStore,state => ({
     isMac:state.platform==="darwin",
     isWin:state.platform==="win32",
@@ -31,10 +31,11 @@ const Index = () => {
     }
     return(
         <StyledHomeHeader style={HeaderStyle} onDoubleClick={onDoubleClick}>
-          <HeaderAvatar/>
+            <HeaderAvatar position={isMac?"right":"left"}/>
           {isWin && <AppAction/>}
+
         </StyledHomeHeader>
     )
 }
 
-export default Index
+export default HomeHeader

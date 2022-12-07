@@ -15,7 +15,7 @@ const HomeContent:FC<IProps> = (props) => {
           <HomeSider/>
             <StyledMainContent
                 style={{
-                    margin: '24px 16px',
+                    margin: 16,
                     padding: 24,
                     backgroundColor:colorBgContainer
                 }}>

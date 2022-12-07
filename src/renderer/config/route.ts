@@ -14,6 +14,9 @@ const routes:any[]=[
     {
         path: '/',
         component: '@/layouts/homeLayout',
+        wrappers: [
+            '@/wrappers/ThemeWrapper',
+        ],
         routes: [
             { path: '/',redirect:'/home'},
             { path: '/home', component: 'home' },

@@ -2,12 +2,14 @@ import {defineModel} from "foca";
 interface IApp {
   collapsed:boolean
   platform:NodeJS.Platform
+    theme:"light"|"dark"
 }
 const initialState:IApp = {
   collapsed:false,
-  platform:window.electron?.platform || 'win32'
+  platform:window.electron?.platform || 'win32',
+    theme:"light"
 }
-const layoutModel = defineModel('layout', {
+const layoutStore = defineModel('layout', {
     initialState,
     reducers: {
         updateState(state, newState: Partial<IApp>) {
@@ -18,4 +20,4 @@ const layoutModel = defineModel('layout', {
         },
     },
 });
-export default layoutModel
+export default layoutStore
