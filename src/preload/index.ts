@@ -1,4 +1,4 @@
-import { contextBridge,ipcRenderer,IpcRendererEvent } from 'electron';
+import { contextBridge,ipcRenderer,IpcRendererEvent,webFrame } from 'electron';
 
 const apiKey = 'electron';
 
@@ -16,6 +16,9 @@ const api: any = {
   ///移除所有的监听器
   removeIPCListener:(channel:string)=>{
     ipcRenderer.removeAllListeners(channel);
+  },
+  scaleApp:(factor:number)=>{
+    webFrame.setZoomFactor(factor)
   }
 };
 

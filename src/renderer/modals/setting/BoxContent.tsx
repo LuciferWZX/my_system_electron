@@ -1,6 +1,7 @@
 import React, {FC} from "react";
 import {StyledBoxContent} from "@/modals/setting/style";
 import {Typography} from "antd";
+import styled from "styled-components";
 const { Text } = Typography;
 
 interface IProps{
@@ -11,10 +12,14 @@ const BoxContent:FC<IProps> = (props) => {
     return(
         <StyledBoxContent>
             {props.title && <Text className={'setting-title'}>{props.title}</Text>}
-            <div>
+            <StyledContent>
                 {props.children}
-            </div>
+            </StyledContent>
         </StyledBoxContent>
     )
 }
+const StyledContent = styled.div`
+  margin-top: 20px;
+  height: 400px;
+`
 export default BoxContent

@@ -1,4 +1,4 @@
-import {FC} from "react";
+import React, {FC} from "react";
 import {Col, Modal, Row} from "antd";
 import {useModel} from "foca";
 import modalStore from "@/stores/modal.store";
@@ -8,6 +8,7 @@ import {StyledSettingContent} from "@/modals/setting/style";
 import {MenuItemType} from "@/types/menu";
 import ThemeForm from "@/modals/setting/theme";
 import BoxContent from "@/modals/setting/BoxContent";
+import GeneralForm from "@/modals/setting/general";
 
 const Setting:FC = () => {
     const {visible,curKey} = useModel(modalStore,state =>({
@@ -54,7 +55,7 @@ const Setting:FC = () => {
                 return(
                     <BoxContent
                         title={"通用"}>
-                        aaa
+                        <GeneralForm />
                     </BoxContent>
 
                 )
@@ -67,6 +68,7 @@ const Setting:FC = () => {
     return(
         <Modal
             title="设置"
+            centered={true}
             open={visible}
             width={700}
             maskClosable={false}

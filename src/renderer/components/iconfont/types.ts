@@ -8,4 +8,6 @@ export enum IconType {
     general="icon-tongyonggongneng",
     sun="icon-046-sun",
     moon="icon-1_moon",
+    check="icon-rcd-check",
+    down="icon-down",
 }

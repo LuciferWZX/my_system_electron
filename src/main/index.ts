@@ -22,8 +22,8 @@ if (!gotTheLock) {
 
   const createWindow=():BrowserWindow=>{
     const win = new BrowserWindow({
-      minWidth: 400,
-      minHeight: 300,
+      minWidth: 700,
+      minHeight: 500,
       frame:false,
       show:false,
       titleBarStyle:"hidden",
@@ -40,7 +40,6 @@ if (!gotTheLock) {
       win.loadURL('http://localhost:8083').then();
       win.webContents.openDevTools()
     }
-
     win.on('closed', () => { mainWindow = null; })
     win.on('ready-to-show', () => { win.show() })
     return win

@@ -6,6 +6,7 @@ declare global {
       versions:ElectronVersion
       appAction:(channel:"min"|"max"|"close")=>void
       platform:NodeJS.Platform
+      scaleApp:(factor:number)=>void
     },
   }
 }

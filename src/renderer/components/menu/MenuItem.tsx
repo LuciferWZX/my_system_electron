@@ -12,7 +12,6 @@ interface IProps{
 }
 const MenuItem:FC<IProps> = (props) => {
     const { token } = useToken();
-    console.log(111,token.colorBgElevated)
     return(
         <StyledMenuItem
             checked={props.checked}

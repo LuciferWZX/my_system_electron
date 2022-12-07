@@ -2,12 +2,16 @@ import {defineModel} from "foca";
 interface IApp {
   collapsed:boolean
   platform:NodeJS.Platform
-    theme:"light"|"dark"
+  theme:"light"|"dark"
+  primaryColor:string
+  fontSize:number
 }
 const initialState:IApp = {
   collapsed:false,
   platform:window.electron?.platform || 'win32',
-    theme:"light"
+    theme:"light",
+  primaryColor:"#1677ff",
+  fontSize:100
 }
 const layoutStore = defineModel('layout', {
     initialState,

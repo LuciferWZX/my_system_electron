@@ -1,13 +1,14 @@
 import React, {FC, Fragment} from "react";
 import {Outlet} from "umi";
 import {SettingModal} from "@/modals";
-import {useAppTheme} from "@/hooks/useAppTheme";
 import {ConfigProvider, theme} from "antd";
 import {useMemoizedFn} from "ahooks";
 import styled from "styled-components";
+import {useAppScale, useAppTheme} from "@/hooks";
 const {useToken}=theme
 const Layouts:FC = () => {
-    const [appTheme] = useAppTheme()
+    useAppScale()
+    const [appTheme,primaryColor] = useAppTheme()
 
     const renderTheme=useMemoizedFn(()=>{
         if(appTheme === "dark"){
@@ -20,6 +21,9 @@ const Layouts:FC = () => {
         <ConfigProvider
             theme={{
                 algorithm: renderTheme(),
+                token:{
+                  colorPrimary:primaryColor
+                }
             }}
             getPopupContainer={()=>document.getElementById("app-layout") as HTMLDivElement}
         >
@@ -41,6 +45,7 @@ const LayoutContent:FC = () => {
 const StyledLayouts = styled.div<{dropBgColor:string}>`
   height: 100%;
   width: 100%;
+
   .dropdown-content {
     background: ${({dropBgColor})=>dropBgColor};
     box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%),
