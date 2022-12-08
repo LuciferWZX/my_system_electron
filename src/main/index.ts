@@ -1,6 +1,8 @@
 import { app, BrowserWindow, protocol } from 'electron';
 import createProtocol from './createProtocol';
 import mainWindowIpcStart from './lib/mainWindowIpcStart';
+import initPouchDB from "./database/initPouchDB";
+import pouchDBStart from "./lib/pouchDBStart";
 
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -40,14 +42,18 @@ if (!gotTheLock) {
       win.loadURL('http://localhost:8083').then();
       win.webContents.openDevTools()
     }
+    initPouchDB("my_db")
     win.on('closed', () => { mainWindow = null; })
     win.on('ready-to-show', () => { win.show() })
     return win
   }
 
   app.on("ready",()=>{
+
     mainWindow = createWindow();
+    pouchDBStart(mainWindow);
     mainWindowIpcStart(mainWindow);
+
   })
   app.on('second-instance', (event, commandLine, workingDirectory) => {
     // 当运行第二个实例时,将会聚焦到myWindow这个窗口

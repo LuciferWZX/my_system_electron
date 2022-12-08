@@ -6,7 +6,10 @@ import {useModel} from "foca";
 import appStore from "@/stores/app.store";
 import HeaderAvatar from "@/layouts/homeLayout/homeHeader/headerAvatar";
 
-const HomeHeader:FC = () => {
+interface IProps{
+    isAuthority?:boolean
+}
+const HomeHeader:FC<IProps> = (props) => {
   const {isMac,isWin}=useModel(appStore,state => ({
     isMac:state.platform==="darwin",
     isWin:state.platform==="win32",
@@ -31,7 +34,7 @@ const HomeHeader:FC = () => {
     }
     return(
         <StyledHomeHeader style={HeaderStyle} onDoubleClick={onDoubleClick}>
-            <HeaderAvatar position={isMac?"right":"left"}/>
+            {props.isAuthority&&<HeaderAvatar position={isMac?"right":"left"}/>}
           {isWin && <AppAction/>}
 
         </StyledHomeHeader>

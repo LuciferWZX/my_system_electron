@@ -1,7 +1,6 @@
 import React, {FC} from "react";
 import {StyledHomeContent, StyledMainContent} from "@/layouts/homeLayout/style";
 import {theme} from "antd";
-import HomeHeader from "@/layouts/homeLayout/homeHeader";
 import HomeSider from "@/layouts/homeLayout/homeSider";
 interface IProps{
     children?:React.ReactNode

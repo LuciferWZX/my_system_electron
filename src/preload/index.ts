@@ -1,7 +1,8 @@
 import { contextBridge,ipcRenderer,IpcRendererEvent,webFrame } from 'electron';
+import database from "./database";
 
 const apiKey = 'electron';
-
+const databaseKey = 'app_db'
 const api: any = {
   versions: process.versions,
   platform:process.platform,
@@ -19,8 +20,9 @@ const api: any = {
   },
   scaleApp:(factor:number)=>{
     webFrame.setZoomFactor(factor)
-  }
+  },
 };
 
 contextBridge.exposeInMainWorld(apiKey, api);
+contextBridge.exposeInMainWorld(databaseKey, database);
 

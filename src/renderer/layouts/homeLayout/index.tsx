@@ -9,7 +9,7 @@ const HomeLayout:FC = () => {
     return(
         <StyledHome>
             <Layout className={'global-layout'}>
-              <HomeHeader/>
+              <HomeHeader isAuthority={true}/>
                 <HomeContent>
                     <Outlet />
                 </HomeContent>
