@@ -26,8 +26,10 @@
     "pouchdb": "^7.3.1",
     "pouchdb-find": "^7.3.1",
     "react-lottie": "^1.2.3",
+    "storejs": "^2.0.1",
     "styled-components": "^5.3.6",
-    "umi": "^4.0.34"
+    "umi": "^4.0.34",
+    "umi-request": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.26",

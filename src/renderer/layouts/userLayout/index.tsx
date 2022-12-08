@@ -7,13 +7,17 @@ import BackgroundDarkImg from '@/assets/svgs/login_bg_dark.svg'
 import HomeHeader from "@/layouts/homeLayout/homeHeader";
 import {useAppTheme} from "@/hooks";
 import {Layout} from "antd";
+import {useModel} from "foca";
+import appStore from "@/stores/app.store";
 const UserLayout:FC = () => {
     const [theme] = useAppTheme()
-
+  const {isWin}=useModel(appStore,state => ({
+    isWin:state.platform==="win32",
+  }));
     return(
         <StyledUserLayout appTheme={theme}>
             <Layout className={'login-layout'}>
-                <HomeHeader  />
+              {isWin&&<HomeHeader  />}
                 <Layout.Content>
                     <Outlet />
                 </Layout.Content>

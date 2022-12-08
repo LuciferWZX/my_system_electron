@@ -42,7 +42,6 @@ if (!gotTheLock) {
       win.loadURL('http://localhost:8083').then();
       win.webContents.openDevTools()
     }
-    initPouchDB("my_db")
     win.on('closed', () => { mainWindow = null; })
     win.on('ready-to-show', () => { win.show() })
     return win

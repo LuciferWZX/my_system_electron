@@ -1,5 +1,6 @@
 import { defineConfig } from 'umi';
-import routes from "./config/route";
+import {proxy, routes} from './config';
+
 
 export default defineConfig({
   npmClient: 'pnpm',
@@ -11,6 +12,7 @@ export default defineConfig({
   model:{},
   routes:routes,
   initialState: {},
+  proxy:proxy,
   electronBuilder: {
     rendererTarget: 'web',
     builderOptions: {

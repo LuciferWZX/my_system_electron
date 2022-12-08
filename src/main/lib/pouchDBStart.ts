@@ -42,14 +42,34 @@ export default (win:BrowserWindow)=>{
         fields?:string[],
         sort?:string[]
     })=>{
-        const db = new PouchDB(getPath(dbName))
+      const dbPath=getPath(dbName)
+        const db = new PouchDB(dbName)
         try {
             const res =await db.find(config)
             console.log(`${dbName}查询到的数据:`,res)
             return res.docs
         }catch (e){
-            console.log("db_find出错:",e?.message)
+          if (e.name === 'OpenError') {
+            const path = db.__opts.prefix ? db.__opts.prefix + dbPath : dbPath;
+
+            return new Promise(function (resolve, reject) {
+              const mkdirp = require('mkdirp')
+              const pathResolve = require('path').resolve
+              mkdirp(pathResolve(path), function (error) {
+                if (error) {
+                  return reject(error)
+                }
+              })
+            })
+
+              .then(function () {
+                // reusing the db instance from above does not work for me
+                return new PouchDB(dbPath).info()
+              })
+          }
+            console.log("db_find出错:",e)
         }finally {
+
             await db.close();
         }
     })
