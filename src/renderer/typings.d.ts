@@ -13,11 +13,14 @@ declare global {
       find:(dbName:string, config?:{
             selector?:any
             fields?:string[],
-            sort?:string[]
+            sort?:string[],
+          limit?:number
           })=>Promise<any>
       update:(dbName:string,newData:any,config?:{
           selector?:any
           fields?:string[],
+          indexFields?:string[]
+
       })=>Promise<any>
     }
   }

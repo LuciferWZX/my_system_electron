@@ -27,16 +27,30 @@ const userStore = defineModel('user', {
           setLocal({
             [StorageKey.token]:result.data.token
           })
-          await this.initUserData(result.data)
+          await this.setUserInfo(result.data,{updateDB:true})
         }
         return result
       },
-      ///当用户登录的时候获取用户数据
-      async initUserData(user:User){
+      ///当用户登录的时候更新用户数据
+      async setUserInfo(user:User,config?:{
+          updateDB?:boolean
+      }){
         console.log("开始获取用户信息")
+          //更新store数据
         this.updateState({
           user
         })
+          //更新到数据库
+          if(config?.updateDB && window?.app_db){
+              const {update}=window.app_db
+              await update(
+                  'users',
+                  {_id:user.id,...user},
+                  {
+                      selector:{id:user.id},
+                      indexFields:['id','phone','email','token','username','nickname']
+                  })
+          }
         console.log("获取用户信息完成")
       }
   }

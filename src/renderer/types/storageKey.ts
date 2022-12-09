@@ -1,3 +1,4 @@
 export enum StorageKey {
-  token='token'
+  token='token',
+  localSetting='localSetting'
 }

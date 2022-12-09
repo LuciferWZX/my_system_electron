@@ -10,4 +10,7 @@ export enum IconType {
     moon="icon-1_moon",
     check="icon-rcd-check",
     down="icon-down",
+    error="icon-error",
+    success="icon-success",
+    warning="icon-warning",
 }

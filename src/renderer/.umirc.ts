@@ -15,9 +15,10 @@ export default defineConfig({
   proxy:proxy,
   electronBuilder: {
     rendererTarget: 'web',
+    buildType:'webpack',
     builderOptions: {
       appId: 'com.wzx.electron',
-      productName: '测试',
+      productName: 'BigTool',
       publish: [
         {
           provider: 'generic',
@@ -25,5 +26,6 @@ export default defineConfig({
         },
       ],
     },
+    externals:['pouchdb','clone-buffer','uuid','node-fetch']
   },
 });

@@ -23,7 +23,8 @@ export default (win:BrowserWindow)=>{
     });
     ///查询该database的所有数据
     ipcMain.handle("db_get_all",async (event, dbName:string)=>{
-        const db = new PouchDB(getPath(dbName))
+        const dbPath=getPath(dbName)
+        const db = new PouchDB(dbPath)
         try {
             const res =await db.allDocs({
                 include_docs:true
@@ -41,9 +42,10 @@ export default (win:BrowserWindow)=>{
         selector?:Map<string,any>
         fields?:string[],
         sort?:string[]
+        limit?:number
     })=>{
       const dbPath=getPath(dbName)
-        const db = new PouchDB(dbName)
+        const db = new PouchDB(dbPath)
         try {
             const res =await db.find(config)
             console.log(`${dbName}查询到的数据:`,res)
@@ -78,12 +80,22 @@ export default (win:BrowserWindow)=>{
     ipcMain.handle("db_update",async (event, dbName:string,newData:any,config?:{
         selector?:Map<string,any>
         fields?:string[],
+        indexFields?:string[]
     })=>{
-        const db = new PouchDB(getPath(dbName))
-        try {
-            const res =await db.find(config)
+        const dbPath=getPath(dbName)
+        const db = new PouchDB(dbPath)
 
+        try {
+            //创建索引
+            await db.createIndex({
+                index:{
+                    // fields:['id','phone','email']
+                    fields:config?.indexFields
+                }
+            })
+            const res =await db.find(config)
             if(res.docs.length>0){
+                //存在就更新
                 const result = res.docs[0]
                 for (let key in newData){
                     result[key]=newData[key]
@@ -91,6 +103,12 @@ export default (win:BrowserWindow)=>{
                 const updateRes = await db.put(result)
                 console.log(`${dbName}修改的数据:`,updateRes.ok)
                 return updateRes.ok
+            }else{
+                console.log(`${dbName}数据未找到，开始插入数据:`)
+                //不存在就插入
+                return await db.put({
+                    ...newData
+                })
             }
         }catch (e){
             console.log("db_update出错:",e?.message)

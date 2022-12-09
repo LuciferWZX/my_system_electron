@@ -5,6 +5,7 @@
     "name": "wuzhixin",
     "email": "2396423791@qq.com"
   },
+
   "private": true,
   "scripts": {
     "dev": "cross-env PORT=8083 APP_ROOT=src/renderer umi dev",
@@ -21,15 +22,18 @@
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
     "ahooks": "^3.7.2",
+    "clone-buffer": "^1.0.0",
     "cross-env": "^7.0.3",
     "foca": "^1.2.1",
+    "node-fetch": "^3.3.0",
     "pouchdb": "^7.3.1",
     "pouchdb-find": "^7.3.1",
     "react-lottie": "^1.2.3",
     "storejs": "^2.0.1",
     "styled-components": "^5.3.6",
     "umi": "^4.0.34",
-    "umi-request": "^1.4.0"
+    "umi-request": "^1.4.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.26",

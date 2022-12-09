@@ -1,18 +1,18 @@
 import React, {FC} from "react";
-import {Form, Slider} from "antd";
+import {Form, Slider, Typography} from "antd";
 import {StyledThemeForm} from "@/modals/setting/theme/style";
 import SelectBox, {BoxItem} from "@/modals/setting/theme/SelectBox";
 import {IconFont, IconType} from "@/components";
 import appStore from "@/stores/app.store";
 import ColorsBox from "@/modals/setting/theme/ColorsBox";
-
+const { Text ,Link} = Typography;
 interface ThemeFormValues{
     background:"light"|"dark"
   primaryColor:string
   fontSize:number
 }
 const ThemeForm:FC = () => {
-
+    const [form] = Form.useForm();
     const backgroundOptions:BoxItem[]=[
         {value:"light",label:"白光",icon:<IconFont type={IconType.sun}/>},
         {value:"dark",label:"暗夜",icon:<IconFont type={IconType.moon}/>},
@@ -41,6 +41,11 @@ const ThemeForm:FC = () => {
         appStore.updateState({fontSize:changedValues.fontSize})
       }
     }
+    const resetTheme=async ()=>{
+        await appStore.initTheme()
+
+        form.resetFields()
+    }
     return(
         <StyledThemeForm>
            <Form
@@ -50,6 +55,7 @@ const ThemeForm:FC = () => {
                  primaryColor:appStore.state.primaryColor,
                  fontSize:appStore.state.fontSize,
                }}
+               form={form}
                layout={"vertical"}
                autoComplete="off">
                <Form.Item
@@ -91,6 +97,16 @@ const ThemeForm:FC = () => {
                  }}
                />
              </Form.Item>
+               <Form.Item
+                   label="重置"
+               >
+                   <Text type="secondary">
+                       还原所有外观设置
+                       <Link onClick={resetTheme}> 重置</Link>
+                   </Text>
+
+               </Form.Item>
+
            </Form>
         </StyledThemeForm>
     )

@@ -4,7 +4,7 @@ import {Form, Select, Space, Typography} from "antd";
 import {IconFont, IconType} from "@/components";
 import {GlobalOutlined} from "@ant-design/icons";
 
-const { Text } = Typography;
+const { Text ,Link} = Typography;
 
 interface OptionType{
   value:string
@@ -30,6 +30,7 @@ const GeneralForm = () => {
   return(
     <StyledGeneralForm>
       <Form
+          colon={false}
         initialValues={{
           language:"zh-CN"
         }}
@@ -49,6 +50,7 @@ const GeneralForm = () => {
             />
           </Form.Item>
           <Text type="secondary">"软件语言"仅对你的客户端界面生效。</Text>
+
         </Space>
       </Form>
     </StyledGeneralForm>

@@ -1,13 +1,12 @@
-import React, {FC, Fragment} from "react";
+import React, {FC} from "react";
 import {Outlet} from "umi";
 import {SettingModal} from "@/modals";
 import {ConfigProvider, theme} from "antd";
 import {useMemoizedFn} from "ahooks";
 import styled from "styled-components";
-import {useAppScale, useAppTheme} from "@/hooks";
+import {useAppNetwork, useAppTheme} from "@/hooks";
 const {useToken}=theme
 const Layouts:FC = () => {
-    useAppScale()
     const [appTheme,primaryColor] = useAppTheme()
 
     const renderTheme=useMemoizedFn(()=>{
@@ -27,16 +26,19 @@ const Layouts:FC = () => {
             }}
             getPopupContainer={()=>document.getElementById("app-layout") as HTMLDivElement}
         >
+
             <LayoutContent/>
         </ConfigProvider>
     )
 }
 const LayoutContent:FC = () => {
     const {token} = useToken()
+    const [contextHolder]=useAppNetwork()
     return(
         <StyledLayouts
             dropBgColor={token.colorBgElevated}
             id={'app-layout'}>
+            {contextHolder}
             <Outlet/>
             <SettingModal/>
         </StyledLayouts>

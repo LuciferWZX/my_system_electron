@@ -7,3 +7,9 @@ export const setLocal=(data:any)=>{
 export const getLocal=(key:StorageKey)=>{
   return store(key)
 }
+export const removeLocal=(key:StorageKey)=>{
+  store.remove(key)
+}
+export const clearLocal=()=>{
+  store.clear()
+}

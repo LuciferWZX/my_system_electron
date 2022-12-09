@@ -30,7 +30,8 @@ if (!gotTheLock) {
       show:false,
       titleBarStyle:"hidden",
       webPreferences: {
-        contextIsolation: true,
+        contextIsolation: false,
+        nodeIntegration:true,
         preload: path.join(__dirname, 'preload.js'),
       },
     });
