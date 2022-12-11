@@ -45,7 +45,17 @@ if (!gotTheLock) {
       win.loadURL('http://localhost:8083').then();
       win.webContents.openDevTools()
     }
-    win.on('closed', () => { mainWindow = null; })
+    win.on('close',(event)=>{
+      console.log("close：")
+      console.log("主窗口关闭之前")
+      event.preventDefault()
+      //@todo 发送窗口是否是退出到托盘还是直接退出应用
+    })
+    win.on('closed', () => {
+      console.log("closed：")
+      console.log("主窗口已经关闭了")
+      mainWindow = null;
+    })
     win.on('ready-to-show', () => { win.show() })
     return win
   }
@@ -73,7 +83,12 @@ if (!gotTheLock) {
     }
   })
 
+  app.on('before-quit',()=>{
+    console.log("before-quit:")
+    console.log("我退出了")
+  })
   app.on('quit', () => {
+    console.log("quit:")
     app.releaseSingleInstanceLock();//释放所有的单例锁
   });
 
