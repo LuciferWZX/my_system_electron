@@ -9,6 +9,7 @@ import {LocalSetting} from "@/types/localSetting";
 import appStore from "@/stores/app.store";
 import {ENV} from "@/utils/constant";
 import {getUserId, parseToken} from "@/utils/help";
+import {message} from "antd";
 
 export const getInitialState=async ()=>{
   console.log("开始初始化数据")

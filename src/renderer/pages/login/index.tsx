@@ -7,6 +7,8 @@ import {Button, Form, Input, message, Typography} from "antd";
 import userStore from "@/stores/user.store";
 import {useDebounceFn, useRequest} from "ahooks";
 import {ResponseCode} from "@/types/ResponseResult";
+
+
 const { Title } = Typography;
 
 interface LoginFormValueType{
@@ -14,6 +16,7 @@ interface LoginFormValueType{
   password:string
 }
 const LoginPage:FC = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const {runAsync:runLogin,loading}=useRequest((params:LoginFormValueType)=>userStore.login({
     username:params.username,
     password:params.password
@@ -25,8 +28,10 @@ const LoginPage:FC = () => {
     async (params:LoginFormValueType)=>{
       const result =await runLogin(params)
       if(result.code === ResponseCode.success){
-        message.success({content:"登录成功",key:"success"})
+        messageApi.success({content:"登录成功",key:"success"})
         history.replace("/home")
+      }else {
+        messageApi.error({content:result?.message||"未知原因",key:'error'})
       }
     },
     {
@@ -46,6 +51,7 @@ const LoginPage:FC = () => {
     }
     return(
         <StyledLoginForm>
+          {contextHolder}
             <LottieBox>
                 <Lottie
                     options={defaultOptions}

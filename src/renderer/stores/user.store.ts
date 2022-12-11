@@ -4,6 +4,7 @@ import {phoneLogin} from "@/services/user";
 import {ResponseCode, ResponseResult} from "@/types/ResponseResult";
 import {setLocal} from "@/utils/store";
 import {AppStorageKey, StorageKey} from "@/types/storageKey";
+import {message} from "antd";
 interface IUser {
   user:User|null
 }
@@ -22,9 +23,8 @@ const userStore = defineModel('user', {
     },
   methods:{
       async login(params:{username:string,password:string}): Promise<ResponseResult<User>>{
-          console.log(22222,params)
+
         const result = await phoneLogin({phone:params.username,pin:params.password})
-          console.log(111111,result)
         if(result.code === ResponseCode.success){
           setLocal({
             [StorageKey.token]:result.data.token

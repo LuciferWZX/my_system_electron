@@ -1,11 +1,13 @@
 import React, {FC} from "react";
-import {Button} from "antd";
-import {history} from "umi";
+import {Button, message} from "antd";
+
+
+
 
 const HomePage:FC = () => {
     return(
-        <div>
-            <Button onClick={()=> history.replace("/entrance/login")}>跳转</Button>
+        <div id={'xxx'}>
+            <Button onClick={()=> {message.success("xxx",0)}}>跳转</Button>
             HomePage
         </div>
     )
