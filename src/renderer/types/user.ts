@@ -11,3 +11,9 @@ export interface User {
   banned:boolean
   sex:0|1
 }
+export interface TokenType{
+  exp: number
+  iat: number
+  sub: string
+  username: string
+}

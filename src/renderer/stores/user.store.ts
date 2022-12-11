@@ -3,7 +3,7 @@ import {User} from "@/types/user";
 import {phoneLogin} from "@/services/user";
 import {ResponseCode, ResponseResult} from "@/types/ResponseResult";
 import {setLocal} from "@/utils/store";
-import {StorageKey} from "@/types/storageKey";
+import {AppStorageKey, StorageKey} from "@/types/storageKey";
 interface IUser {
   user:User|null
 }
@@ -22,7 +22,9 @@ const userStore = defineModel('user', {
     },
   methods:{
       async login(params:{username:string,password:string}): Promise<ResponseResult<User>>{
+          console.log(22222,params)
         const result = await phoneLogin({phone:params.username,pin:params.password})
+          console.log(111111,result)
         if(result.code === ResponseCode.success){
           setLocal({
             [StorageKey.token]:result.data.token
@@ -41,15 +43,9 @@ const userStore = defineModel('user', {
           user
         })
           //更新到数据库
-          if(config?.updateDB && window?.app_db){
-              const {update}=window.app_db
-              await update(
-                  'users',
-                  {_id:user.id,...user},
-                  {
-                      selector:{id:user.id},
-                      indexFields:['id','phone','email','token','username','nickname']
-                  })
+          if(config?.updateDB && window.app_store){
+              const {updateStore}=window.app_store
+              await updateStore(AppStorageKey.users,user.id,user)
           }
         console.log("获取用户信息完成")
       }

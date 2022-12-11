@@ -13,9 +13,12 @@ export default defineConfig({
   routes:routes,
   initialState: {},
   proxy:proxy,
+  define:{
+    'process.env':process.env
+  },
   electronBuilder: {
     rendererTarget: 'web',
-    buildType:'webpack',
+    //buildType:'vite',
     builderOptions: {
       appId: 'com.wzx.electron',
       productName: 'BigTool',
@@ -26,6 +29,6 @@ export default defineConfig({
         },
       ],
     },
-    externals:['pouchdb','clone-buffer','uuid','node-fetch']
+    // externals:['pouchdb','clone-buffer','uuid','node-fetch']
   },
 });

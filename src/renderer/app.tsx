@@ -2,14 +2,17 @@ import "./stores";
 import React from "react";
 import {FocaProvider} from "foca";
 import {getLocal} from "@/utils/store";
-import {StorageKey} from "@/types/storageKey";
+import {AppStorageKey, StorageKey} from "@/types/storageKey";
 import {User} from "@/types/user";
 import userStore from "@/stores/user.store";
 import {LocalSetting} from "@/types/localSetting";
 import appStore from "@/stores/app.store";
+import {ENV} from "@/utils/constant";
+import {getUserId, parseToken} from "@/utils/help";
 
 export const getInitialState=async ()=>{
   console.log("开始初始化数据")
+  console.log(ENV)
   await initLocalSetting()
   await initUserInfo()
   console.log("初始化数据完成")
@@ -21,19 +24,16 @@ export const rootContainer=(container:React.ReactNode)=> {
 const initUserInfo = async () => {
   const token:string|undefined = getLocal(StorageKey.token);
   if(token){
-    if(window.app_db){
-      const {find}=window.app_db
-      const dbUsers:User[] = await find("users",{
-        selector:{
-          token:token
-        },
-        limit:1
-      })
-      if(dbUsers.length>0){
-        const cacheUser = dbUsers[0]
-        await userStore.setUserInfo(cacheUser)
+    const id = getUserId(token)
+    if(window.app_store){
+      const {getStore}=window.app_store
+      const users: { [name:string]:User|undefined }|undefined = await getStore(AppStorageKey.users)
+      if (users){
+        const cacheUser = users[id]
+        if (cacheUser){
+          await userStore.setUserInfo(cacheUser)
+        }
       }
-
     }
   }
 }

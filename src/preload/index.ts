@@ -1,8 +1,8 @@
 import { contextBridge,ipcRenderer,IpcRendererEvent,webFrame } from 'electron';
-import database from "./database";
+import appStore from "./appStore";
 
 const apiKey = 'electron';
-const databaseKey = 'app_db'
+const appStoreKey = 'app_store'
 const api: any = {
   versions: process.versions,
   platform:process.platform,
@@ -24,5 +24,5 @@ const api: any = {
 };
 
 contextBridge.exposeInMainWorld(apiKey, api);
-contextBridge.exposeInMainWorld(databaseKey, database);
+contextBridge.exposeInMainWorld(appStoreKey, appStore);
 

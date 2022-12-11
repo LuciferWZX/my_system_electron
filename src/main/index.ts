@@ -1,8 +1,11 @@
 import { app, BrowserWindow, protocol } from 'electron';
 import createProtocol from './createProtocol';
 import mainWindowIpcStart from './lib/mainWindowIpcStart';
-import initPouchDB from "./database/initPouchDB";
-import pouchDBStart from "./lib/pouchDBStart";
+import * as path from "path";
+
+// @ts-ignore
+import Store from 'electron-store'
+import storeIpcStart from "./lib/storeIpcStart";
 
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -17,7 +20,6 @@ const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {
   app.quit()
 } else{
-  const path = require('path');
   global.appDirname = __dirname;
   app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
 
@@ -30,16 +32,16 @@ if (!gotTheLock) {
       show:false,
       titleBarStyle:"hidden",
       webPreferences: {
-        contextIsolation: false,
-        nodeIntegration:true,
+        contextIsolation: true,
         preload: path.join(__dirname, 'preload.js'),
       },
     });
     if(app.isPackaged){
       createProtocol('app');
       const winURL = 'app://./index.html'
-      win.loadURL(`file://${winURL}`).then()
+      win.loadURL(winURL).then()
     }else{
+
       win.loadURL('http://localhost:8083').then();
       win.webContents.openDevTools()
     }
@@ -49,9 +51,17 @@ if (!gotTheLock) {
   }
 
   app.on("ready",()=>{
-
     mainWindow = createWindow();
-    pouchDBStart(mainWindow);
+    console.log("路径：",app.getPath('userData'))
+    let option={
+      name:"big_tool_config",//文件名称,默认 config
+      fileExtension:"json",//文件后缀,默认json
+      cwd:app.getPath('userData'),//文件位置,尽量不要动
+//    encryptionKey:"aes-256-cbc" ,//对配置文件进行加密
+      clearInvalidConfig:true, // 发生 SyntaxError  则清空配置,
+    }
+    const  store = new Store(option);
+    storeIpcStart(store)
     mainWindowIpcStart(mainWindow);
 
   })

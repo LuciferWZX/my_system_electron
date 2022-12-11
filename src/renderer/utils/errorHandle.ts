@@ -2,7 +2,7 @@ import {ResponseError} from "umi-request";
 import {message} from "antd";
 
 const errorHandle=(error:ResponseError)=>{
-
+  console.log(111,error)
   if(typeof error.data === "string"){
     const response = error.response as Response
     message.error({content:response.statusText,key:'error'})

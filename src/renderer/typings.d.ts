@@ -8,20 +8,10 @@ declare global {
       platform:NodeJS.Platform
       scaleApp:(factor:number)=>void
     },
-    "app_db"?:{
-      getAll:(dbName:string)=>Promise<any>
-      find:(dbName:string, config?:{
-            selector?:any
-            fields?:string[],
-            sort?:string[],
-          limit?:number
-          })=>Promise<any>
-      update:(dbName:string,newData:any,config?:{
-          selector?:any
-          fields?:string[],
-          indexFields?:string[]
-
-      })=>Promise<any>
+    "app_store"?:{
+        getStore:(key:string)=>Promise<any>
+        setStore:(key:string,value:any)=>Promise<any>
+        updateStore:(storeKey:string,key:string,newData:any)=>Promise<any>
     }
   }
 }
