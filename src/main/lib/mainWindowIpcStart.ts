@@ -34,6 +34,7 @@ export default (win:BrowserWindow)=>{
     // 关闭程序
     ipcMain.handle("close", function () {
         cacheDownItemClose()
+      console.log("wwwwwww")
         win.close();
     })
 

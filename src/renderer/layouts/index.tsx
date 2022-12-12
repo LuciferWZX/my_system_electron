@@ -6,6 +6,7 @@ import {useMemoizedFn} from "ahooks";
 import styled from "styled-components";
 import {useAppNetwork, useAppTheme} from "@/hooks";
 import {useAppEvent} from "@/hooks/useAppEvent";
+import zhCN from 'antd/locale/zh_CN';
 const {useToken}=theme
 const Layouts:FC = () => {
     const [appTheme,primaryColor] = useAppTheme()
@@ -25,6 +26,7 @@ const Layouts:FC = () => {
                   colorPrimary:primaryColor
                 }
             }}
+            locale={zhCN}
             getPopupContainer={()=>document.getElementById("app-layout") as HTMLDivElement}
         >
 

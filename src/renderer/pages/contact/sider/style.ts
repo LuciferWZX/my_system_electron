@@ -3,11 +3,14 @@ import {Layout} from "antd";
 
 export const StyledContactSider = styled(Layout.Sider)<{$hoverBg:string,$activeBg:string}>`
     height: 100%;
+  display: flex;
+  flex-direction: column;
   //overflow: auto;
   border-radius: 4px;
   .mac-scroll-bar{
     height: 100%;
     overflow: auto;
+    flex: 1;
   }
   .friends-list{
     padding: 10px;
@@ -20,5 +23,5 @@ export const StyledContactSider = styled(Layout.Sider)<{$hoverBg:string,$activeB
   .selected-item{
     background-color: ${({$activeBg})=>$activeBg};
   }
-    
+
 `

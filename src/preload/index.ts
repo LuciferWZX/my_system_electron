@@ -11,7 +11,7 @@ const api: any = {
     ipcRenderer.invoke(channel).then(result)
   },
   sendMsgToMain:(channel:string)=>{
-    ipcRenderer.send(channel)
+    ipcRenderer.invoke(channel).then()
   },
   ///监听发送的消息
   addIPCListener:(channel:string,listener:(event: IpcRendererEvent, ...args: any[])=>void)=>{

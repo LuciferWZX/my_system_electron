@@ -49,15 +49,18 @@ if (!gotTheLock) {
       //@todo 发送窗口是否是退出到托盘还是直接退出应用
       const showConfirmType:boolean|undefined = store.get("showConfirmTypeModal")
       const closeType:"min"|"close"|undefined = store.get("closeType")
-
-      if(showConfirmType){
+      console.log("showConfirmType:",showConfirmType)
+      console.log("closeType:",closeType)
+      if(showConfirmType!==false){
         event.preventDefault()
         win.webContents.send("confirmCloseType")
+      }else{
+        if (closeType === "min"){
+          event.preventDefault()
+          win.minimize();
+        }
       }
-      if (closeType === "min"){
-        event.preventDefault()
-        win.minimize();
-      }
+
 
 
     })

@@ -5,6 +5,7 @@ import {useModel} from "foca";
 import userStore from "@/stores/user.store";
 import classnames from "classnames";
 import {MacScrollbar} from "mac-scrollbar";
+import SearchHeader from "@/pages/contact/sider/searchHeader";
 
 const ContactSider:FC = () => {
     const {friends,contactId} = useModel(userStore,state => ({
@@ -24,7 +25,9 @@ const ContactSider:FC = () => {
             style={{backgroundColor:token.colorBgElevated}}
             $hoverBg={token.controlItemBgHover}
             $activeBg={token.controlItemBgActive}
+            width={260}
         >
+            <SearchHeader/>
             <MacScrollbar className={'mac-scroll-bar'}>
                 <List
                     style={{padding:5}}

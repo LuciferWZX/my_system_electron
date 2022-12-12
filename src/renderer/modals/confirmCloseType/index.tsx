@@ -13,19 +13,20 @@ const ConfirmCloseTypeModal:FC = () => {
     const visible = useModel(modalStore,state => state.closeWinTypeVisible)
 
     const [type,setType]=useState<"min"|"quit">("min")
-    const [showTip,{set:setShowTip}]=useBoolean(false)
+    const [noTip,{set:setNoTip}]=useBoolean(false)
     const onCancel=()=>changeCloseWinTypeModal(false)
     const onChange=(e:RadioChangeEvent)=>{
         setType(e.target.value)
     }
     const onChangeCheckbox=(e: CheckboxChangeEvent)=>{
-        setShowTip(e.target.checked)
+      setNoTip(e.target.checked)
     }
     const handleOk=async ()=>{
         if(window.app_store && window.electron){
             const {setStore}=window.app_store
             await setStore("closeType",type)
-            await setStore("showConfirmTypeModal",showTip)
+            await setStore("showConfirmTypeModal",!noTip)
+
             const {sendMsgToMain}=window.electron
             if (type === "min"){
                 sendMsgToMain("min")
@@ -34,6 +35,7 @@ const ConfirmCloseTypeModal:FC = () => {
                 sendMsgToMain("close")
             }
         }
+        modalStore.updateState({closeWinTypeVisible:false})
     }
     return(
         <Modal
@@ -45,7 +47,7 @@ const ConfirmCloseTypeModal:FC = () => {
             closeIcon={<IconFont type={IconType.close}/>}
             transitionName={"ant-fade"}
             footer={[
-                <Checkbox checked={showTip} key={"showTip"} onChange={onChangeCheckbox} style={{float:'left'}}>不再提示</Checkbox>,
+                <Checkbox checked={noTip} key={"showTip"} onChange={onChangeCheckbox} style={{float:'left'}}>不再提示</Checkbox>,
                 <Button
                     key={"submit"}
                     onClick={handleOk}
