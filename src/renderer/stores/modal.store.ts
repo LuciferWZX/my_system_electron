@@ -2,10 +2,12 @@ import {defineModel} from "foca";
 interface IModal {
   settingVisible:boolean,
   settingKey:string
+  closeWinTypeVisible:boolean
 }
 const initialState:IModal = {
     settingVisible:false,
-    settingKey:'theme'
+    settingKey:'theme',
+    closeWinTypeVisible:false
 }
 const modalStore = defineModel('modal', {
     initialState,

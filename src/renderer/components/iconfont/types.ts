@@ -13,4 +13,7 @@ export enum IconType {
     error="icon-error",
     success="icon-success",
     warning="icon-warning",
+    contact="icon-tongxunlu",
+    friendCycle="icon-pengyouquan",
+    meeting="icon-shipin",
 }

@@ -15,11 +15,14 @@ const routes:any[]=[
         path: '/',
         component: '@/layouts/homeLayout',
         wrappers: [
-            '@/wrappers/ThemeWrapper',
+            '@/wrappers/SocketWrapper',
         ],
         routes: [
             { path: '/',redirect:'/home'},
             { path: '/home', component: 'home' },
+            { path: '/contact', component: 'contact' },
+            { path: '/friendsCycle', component: 'friendsCycle' },
+            { path: '/meeting', component: 'meeting' },
         ],
     }, ]
 export default routes

@@ -14,10 +14,10 @@ const HomeContent:FC<IProps> = (props) => {
           <HomeSider/>
             <StyledMainContent
                 style={{
-                    margin: 16,
-                    padding: 24,
+                    margin: 4,
                     backgroundColor:colorBgContainer
-                }}>
+                }}
+            >
                 {props.children}
             </StyledMainContent>
         </StyledHomeContent>

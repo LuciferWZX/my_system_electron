@@ -65,6 +65,9 @@ const Setting:FC = () => {
             }
         }
     }
+    const afterClose=()=>{
+        modalStore.updateState({settingKey:"theme"})
+    }
     return(
         <Modal
             title="设置"
@@ -75,6 +78,7 @@ const Setting:FC = () => {
             closeIcon={<IconFont type={IconType.close}/>}
             transitionName={"ant-fade"}
             footer={null}
+            afterClose={afterClose}
             onCancel={onCancel}>
             <StyledSettingContent>
                 <Row gutter={20}>

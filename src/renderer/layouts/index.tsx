@@ -1,10 +1,11 @@
 import React, {FC} from "react";
 import {Outlet} from "umi";
-import {SettingModal} from "@/modals";
+import {ConfirmCloseTypeModal, SettingModal} from "@/modals";
 import {ConfigProvider, theme} from "antd";
 import {useMemoizedFn} from "ahooks";
 import styled from "styled-components";
 import {useAppNetwork, useAppTheme} from "@/hooks";
+import {useAppEvent} from "@/hooks/useAppEvent";
 const {useToken}=theme
 const Layouts:FC = () => {
     const [appTheme,primaryColor] = useAppTheme()
@@ -33,6 +34,7 @@ const Layouts:FC = () => {
 }
 const LayoutContent:FC = () => {
     const {token} = useToken()
+    useAppEvent()
     const [contextHolder]=useAppNetwork()
     return(
         <StyledLayouts
@@ -41,6 +43,7 @@ const LayoutContent:FC = () => {
             {contextHolder}
             <Outlet/>
             <SettingModal/>
+            <ConfirmCloseTypeModal/>
         </StyledLayouts>
     )
 }

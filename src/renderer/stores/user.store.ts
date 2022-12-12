@@ -1,15 +1,20 @@
 import {defineModel} from "foca";
-import {User} from "@/types/user";
+import {Friend, User} from "@/types/user";
 import {phoneLogin} from "@/services/user";
 import {ResponseCode, ResponseResult} from "@/types/ResponseResult";
 import {setLocal} from "@/utils/store";
 import {AppStorageKey, StorageKey} from "@/types/storageKey";
-import {message} from "antd";
+import {getFriendsList} from "@/services/friends";
+
 interface IUser {
   user:User|null
+    friends:Friend[]
+    contactId:string
 }
 const initialState:IUser = {
-  user:null
+  user:null,
+    friends:[],
+    contactId:""
 }
 const userStore = defineModel('user', {
     initialState,
@@ -21,8 +26,12 @@ const userStore = defineModel('user', {
             return this.initialState;
         },
     },
-  methods:{
-      async login(params:{username:string,password:string}): Promise<ResponseResult<User>>{
+    methods:{
+        /**
+        * 登录
+        * @param params
+        */
+        async login(params:{username:string,password:string}): Promise<ResponseResult<User>>{
 
         const result = await phoneLogin({phone:params.username,pin:params.password})
         if(result.code === ResponseCode.success){
@@ -32,12 +41,9 @@ const userStore = defineModel('user', {
           await this.setUserInfo(result.data,{updateDB:true})
         }
         return result
-      },
-      ///当用户登录的时候更新用户数据
-      async setUserInfo(user:User,config?:{
-          updateDB?:boolean
-      }){
-        console.log("开始获取用户信息")
+        },
+        ///当用户登录的时候更新用户数据
+        async setUserInfo(user:User,config?:{ updateDB?:boolean }){
           //更新store数据
         this.updateState({
           user
@@ -47,8 +53,22 @@ const userStore = defineModel('user', {
               const {updateStore}=window.app_store
               await updateStore(AppStorageKey.users,user.id,user)
           }
-        console.log("获取用户信息完成")
-      }
+      },
+        /**
+         * 查询好友列表
+         * @param data
+         */
+        async getFriendsList(data:{query?:string}){
+            const result:ResponseResult<Friend[]> = await getFriendsList(data)
+            if(result.code === ResponseCode.success){
+                const mock = []
+                for (let i=0;i<100;i++){
+
+                    mock.push(...result.data.map(it=>({...it,id:`${i}`})))
+                }
+                this.updateState({friends:mock})
+            }
+        }
   }
 });
 export default userStore

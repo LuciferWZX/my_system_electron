@@ -24,7 +24,7 @@ if (!gotTheLock) {
   app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
 
 
-  const createWindow=():BrowserWindow=>{
+  const createWindow=(store:Store):BrowserWindow=>{
     const win = new BrowserWindow({
       minWidth: 700,
       minHeight: 500,
@@ -46,10 +46,20 @@ if (!gotTheLock) {
       win.webContents.openDevTools()
     }
     win.on('close',(event)=>{
-      console.log("close：")
-      console.log("主窗口关闭之前")
-      event.preventDefault()
       //@todo 发送窗口是否是退出到托盘还是直接退出应用
+      const showConfirmType:boolean|undefined = store.get("showConfirmTypeModal")
+      const closeType:"min"|"close"|undefined = store.get("closeType")
+
+      if(showConfirmType){
+        event.preventDefault()
+        win.webContents.send("confirmCloseType")
+      }
+      if (closeType === "min"){
+        event.preventDefault()
+        win.minimize();
+      }
+
+
     })
     win.on('closed', () => {
       console.log("closed：")
@@ -61,7 +71,8 @@ if (!gotTheLock) {
   }
 
   app.on("ready",()=>{
-    mainWindow = createWindow();
+
+
     console.log("路径：",app.getPath('userData'))
     let option={
       name:"big_tool_config",//文件名称,默认 config
@@ -70,7 +81,8 @@ if (!gotTheLock) {
 //    encryptionKey:"aes-256-cbc" ,//对配置文件进行加密
       clearInvalidConfig:true, // 发生 SyntaxError  则清空配置,
     }
-    const  store = new Store(option);
+    const store:Store = new Store(option);
+    mainWindow = createWindow(store);
     storeIpcStart(store)
     mainWindowIpcStart(mainWindow);
 

@@ -5,7 +5,7 @@ import {getLocal} from "@/utils/store";
 import {AppStorageKey, StorageKey} from "@/types/storageKey";
 import {User} from "@/types/user";
 import userStore from "@/stores/user.store";
-import {LocalSetting} from "@/types/localSetting";
+import {LocalGeneral, LocalSetting} from "@/types/localSetting";
 import appStore from "@/stores/app.store";
 import {ENV} from "@/utils/constant";
 import {getUserId, parseToken} from "@/utils/help";
@@ -40,11 +40,18 @@ const initUserInfo = async () => {
 }
 const initLocalSetting = async ()=>{
   const setting:LocalSetting|undefined = getLocal(StorageKey.localSetting)
+  const general:LocalGeneral|undefined = getLocal(StorageKey.localGeneral)
   if(setting){
     appStore.updateState({
       theme:setting.theme,
       primaryColor:setting.primaryColor,
       fontSize:setting.fontSize,
+    })
+  }
+  if(general){
+    appStore.updateState({
+      language:general.language,
+      closeType:general.closeType
     })
   }
 }
