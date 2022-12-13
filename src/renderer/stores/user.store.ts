@@ -4,7 +4,7 @@ import {phoneLogin} from "@/services/user";
 import {ResponseCode, ResponseResult} from "@/types/ResponseResult";
 import {setLocal} from "@/utils/store";
 import {AppStorageKey, StorageKey} from "@/types/storageKey";
-import {getFriendsList} from "@/services/friends";
+import {getFriendsList, modifyFriendRemark} from "@/services/friends";
 
 interface IUser {
   user:User|null
@@ -61,13 +61,34 @@ const userStore = defineModel('user', {
         async getFriendsList(data:{query?:string}){
             const result:ResponseResult<Friend[]> = await getFriendsList(data)
             if(result.code === ResponseCode.success){
-                const mock = []
-                for (let i=0;i<100;i++){
-
-                    mock.push(...result.data.map(it=>({...it,id:`${i}`})))
-                }
-                this.updateState({friends:mock})
+                // const mock = []
+                // for (let i=0;i<100;i++){
+                //
+                //     mock.push(...result.data.map(it=>({...it,id:`${i}`})))
+                // }
+                this.updateState({friends:result.data})
             }
+        },
+        /**
+         * 修改好友备注
+         * @param data
+         */
+        async modifyFriendRemark(data:{id:string,remark?:string}){
+            const result:ResponseResult<Friend> = await modifyFriendRemark(data)
+            if(result.code === ResponseCode.success){
+                this.updateState({
+                    friends:this.state.friends.map(friend=>{
+                        if(friend.id === result.data.id){
+                            return {
+                                ...result.data,
+                                friendInfo:friend.friendInfo
+                            }
+                        }
+                        return friend
+                    })
+                })
+            }
+            return result
         }
   }
 });

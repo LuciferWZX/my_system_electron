@@ -12,3 +12,11 @@ export const StyledContent = styled(Layout.Content)`
   width: 100%;
   overflow: hidden;
 `
+export const StyledInfoBox = styled.div`
+  box-sizing: border-box;
+  width: 350px;
+  height: 300px;
+  .ant-descriptions-item-content{
+    display: unset!important;
+  }
+`

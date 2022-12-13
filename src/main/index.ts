@@ -85,6 +85,7 @@ if (!gotTheLock) {
       clearInvalidConfig:true, // 发生 SyntaxError  则清空配置,
     }
     const store:Store = new Store(option);
+    // store.set("showConfirmTypeModal",true)
     mainWindow = createWindow(store);
     storeIpcStart(store)
     mainWindowIpcStart(mainWindow);

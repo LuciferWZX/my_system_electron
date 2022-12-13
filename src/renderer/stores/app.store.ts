@@ -38,8 +38,6 @@ const layoutStore = defineModel('layout', {
     skipRefresh:true,
     events:{
         async onChange(pre,next){
-            console.log("pre:",pre)
-            console.log("next:",pre)
             setLocal({
                 [StorageKey.localSetting]:{
                     theme:next.theme,

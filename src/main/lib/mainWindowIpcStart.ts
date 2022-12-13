@@ -34,8 +34,12 @@ export default (win:BrowserWindow)=>{
     // 关闭程序
     ipcMain.handle("close", function () {
         cacheDownItemClose()
-      console.log("wwwwwww")
         win.close();
+    })
+
+    //强制销毁
+    ipcMain.handle("destroy",function (){
+        win.destroy()
     })
 
     // 设置下载路径
