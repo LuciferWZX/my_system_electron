@@ -17,4 +17,5 @@ export enum IconType {
     friendCycle="icon-pengyouquan",
     meeting="icon-shipin",
     addAccount="icon-add-account",
+    add="icon-add",
 }

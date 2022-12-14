@@ -12,7 +12,7 @@ export const StyledSearchBox = styled.div`
   }
 
 `
-export const StyledOptionInnerBox = styled.div`
+export const StyledOptionInnerBox = styled.div<{highlightColor:string}>`
     display: flex;
     .desc{
       flex: 1;
@@ -21,4 +21,8 @@ export const StyledOptionInnerBox = styled.div`
       white-space: nowrap;
       margin-left: 5px;
     }
+  .high-light{
+    color:${({highlightColor})=>highlightColor};
+    background-color: unset;
+  }
 `

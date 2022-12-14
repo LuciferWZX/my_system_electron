@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import {Layout} from "antd";
+import {FullBox} from "@/styles/FullBox";
 
-export const StyledContactBox = styled(Layout)`
-    height: 100%;
-    overflow: hidden;
+export const StyledContactBox = styled(FullBox)`
+    display: flex;
 `

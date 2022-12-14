@@ -25,7 +25,6 @@ const ContactSider:FC = () => {
             style={{backgroundColor:token.colorBgElevated}}
             $hoverBg={token.controlItemBgHover}
             $activeBg={token.controlItemBgActive}
-            width={260}
         >
             <SearchHeader/>
             <MacScrollbar className={'mac-scroll-bar'}>
@@ -34,6 +33,8 @@ const ContactSider:FC = () => {
                     itemLayout="horizontal"
                     dataSource={friends}
                     renderItem={(item) => {
+                        const {senderId,friendInfo,senderRemark,receiverRemark}=item
+                        const remark = senderId === friendInfo.id?receiverRemark:senderRemark;
                         return(
                             <List.Item
                                 onClick={()=>selectedContactId(item.id)}
@@ -47,7 +48,7 @@ const ContactSider:FC = () => {
                                         shape={"square"}
                                         src={item.friendInfo.avatar}
                                     />}
-                                    title={item.friendInfo.nickname}
+                                    title={remark ?? item.friendInfo.nickname}
                                 />
                             </List.Item>
                         )

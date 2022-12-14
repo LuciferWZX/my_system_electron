@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {Outlet} from "umi";
-import {ConfirmCloseTypeModal, SettingModal} from "@/modals";
+import {AddFriendsModal, ConfirmCloseTypeModal, SettingModal} from "@/modals";
 import {ConfigProvider, theme} from "antd";
 import {useMemoizedFn} from "ahooks";
 import styled from "styled-components";
@@ -46,6 +46,7 @@ const LayoutContent:FC = () => {
             <Outlet/>
             <SettingModal/>
             <ConfirmCloseTypeModal/>
+            <AddFriendsModal/>
         </StyledLayouts>
     )
 }

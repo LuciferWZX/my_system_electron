@@ -15,7 +15,7 @@ const HomeContent:FC<IProps> = (props) => {
             <StyledMainContent
                 style={{
                     margin: 4,
-                    backgroundColor:colorBgContainer
+                    //backgroundColor:colorBgContainer
                 }}
             >
                 {props.children}

@@ -4,16 +4,18 @@ import {phoneLogin} from "@/services/user";
 import {ResponseCode, ResponseResult} from "@/types/ResponseResult";
 import {setLocal} from "@/utils/store";
 import {AppStorageKey, StorageKey} from "@/types/storageKey";
-import {getFriendsList, modifyFriendRemark} from "@/services/friends";
+import {getFriendsList, modifyFriendRemark, searchUsers} from "@/services/friends";
 
 interface IUser {
   user:User|null
     friends:Friend[]
+    searchUsers:User[]
     contactId:string
 }
 const initialState:IUser = {
   user:null,
     friends:[],
+    searchUsers:[],
     contactId:""
 }
 const userStore = defineModel('user', {
@@ -87,6 +89,17 @@ const userStore = defineModel('user', {
                         return friend
                     })
                 })
+            }
+            return result
+        },
+        /**
+         * （网络）查找用户
+         * @param data
+         */
+        async searchUsers(data:{query?:string}){
+            const result:ResponseResult<User[]> = await searchUsers(data)
+            if(result.code === ResponseCode.success){
+                this.updateState({searchUsers:result.data})
             }
             return result
         }

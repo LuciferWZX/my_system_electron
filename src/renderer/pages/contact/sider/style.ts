@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import {Layout} from "antd";
 
-export const StyledContactSider = styled(Layout.Sider)<{$hoverBg:string,$activeBg:string}>`
+export const StyledContactSider = styled.div<{$hoverBg:string,$activeBg:string}>`
     height: 100%;
+  width: 260px;
   display: flex;
   flex-direction: column;
   //overflow: auto;

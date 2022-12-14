@@ -1,12 +1,13 @@
 import React, {FC, useEffect, useState} from "react";
 import {StyledOptionInnerBox, StyledSearchBox} from "@/pages/contact/sider/searchHeader/style";
-import {Avatar, Button, Select, Typography} from "antd";
+import {Avatar, Button, Select, theme, Typography} from "antd";
 import {IconFont, IconType} from "@/components";
 import Highlighter from "react-highlight-words";
 import {useModel} from "foca";
 import PinyinMatch from 'pinyin-match';
 import userStore from "@/stores/user.store";
 import {Friend} from "@/types/user";
+import modalStore from "@/stores/modal.store";
 
 
 const {Option}=Select
@@ -16,6 +17,7 @@ const SearchHeader:FC = () => {
     const {friends} = useModel(userStore,state => ({
         friends:state.friends
     }))
+    const {token:{colorPrimary}} = theme.useToken();
 
     const onChange = (value: string) => {
         console.log(`selected ${value}`);
@@ -88,7 +90,6 @@ const SearchHeader:FC = () => {
         //备注
         const remarkOk = PinyinMatch.match(remark||"",query)
         if (typeof remarkOk !== "boolean"){
-            console.log(1111,[(remark||"")?.substring(remarkOk[0],remarkOk[1]+1)])
             return {
                 remark,
                 type:'remark',
@@ -139,9 +140,13 @@ const SearchHeader:FC = () => {
         }
 
     }
+
+    const openAddFriendsModal=()=>{
+        modalStore.updateState({addFriendsVisible:true})
+    }
   return(
     <StyledSearchBox >
-        <Button className={'friend-add-btn'}  icon={<IconFont type={IconType.addAccount} />} />
+        <Button onClick={openAddFriendsModal} className={'friend-add-btn'}  icon={<IconFont type={IconType.addAccount} />} />
         <Select
             showSearch
             className={'friend-select'}
@@ -162,10 +167,10 @@ const SearchHeader:FC = () => {
                 const {remark,msg,type}=filterDesc(friend)
                 return(
                     <Option key={friend.id} value={friend.id} label={remark}>
-                        <StyledOptionInnerBox >
+                        <StyledOptionInnerBox highlightColor={colorPrimary}>
                             <Avatar size={42} shape={"square"} src={friend.friendInfo.avatar} />
                             <div className={'desc'}>
-                                <Text>{remark}</Text>
+                                <Text>{type!=="remark"?remark:msg}</Text>
                                 <br/>
                                 {type!=="remark" && <Text type={"secondary"}>
                                     {msg}
