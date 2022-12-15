@@ -13,12 +13,25 @@ const socketStore = defineModel('socket', {
         updateState(state, newState: Partial<ISocket>) {
             Object.assign(state, newState);
         },
-        clear() {
+        clear(state) {
+            const socket = state.socket
+            if(socket){
+                if (socket.connected){
+                    socket.disconnect()
+                    socket.close()
+                }
+            }
             return this.initialState;
         },
     },
     methods:{
 
-    }
+    },
+    events:{
+        onDestroy(){
+
+        }
+    },
+    skipRefresh:true
 });
 export default socketStore

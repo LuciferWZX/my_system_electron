@@ -11,6 +11,7 @@ const UserDetailModal:FC = () => {
         visible:state.userDetailVisible,
         user:state.detailUser,
     }))
+
     const onCancel=()=>{
         modalStore.updateState({userDetailVisible:false})
     }
@@ -23,6 +24,7 @@ const UserDetailModal:FC = () => {
             afterClose={afterClose}
             onCancel={onCancel}
             footer={null}
+            destroyOnClose={true}
             transitionName={""}
             closeIcon={<IconFont type={IconType.close}/>}
             title={"添加好友"}>

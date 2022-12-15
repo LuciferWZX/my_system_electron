@@ -17,10 +17,12 @@ const SearchHeader:FC = () => {
     const {friends} = useModel(userStore,state => ({
         friends:state.friends
     }))
-    const {token:{colorPrimary}} = theme.useToken();
+    const {token:{colorPrimary,colorBorder}} = theme.useToken();
 
     const onChange = (value: string) => {
-        console.log(`selected ${value}`);
+        if(value){
+            userStore.updateState({contactId:value})
+        }
     };
 
     const onSearch = (value: string) => {
@@ -28,7 +30,8 @@ const SearchHeader:FC = () => {
     };
     const filterDesc=(friend:Friend)=>{
         const {senderId,friendInfo,senderRemark,receiverRemark}=friend
-        const remark = senderId === friendInfo.id?receiverRemark:senderRemark;
+        let remark = senderId === friendInfo.id?receiverRemark:senderRemark;
+        remark = remark??friendInfo.nickname
         const email = friendInfo.email
         const nickname = friendInfo.nickname
         const username = friendInfo.username
@@ -145,7 +148,8 @@ const SearchHeader:FC = () => {
         modalStore.updateState({addFriendsVisible:true})
     }
   return(
-    <StyledSearchBox >
+    <StyledSearchBox
+        style={{borderBottom:`1px solid ${colorBorder}`}}>
         <Button onClick={openAddFriendsModal} className={'friend-add-btn'}  icon={<IconFont type={IconType.addAccount} />} />
         <Select
             showSearch
@@ -165,6 +169,7 @@ const SearchHeader:FC = () => {
                 return type!=='no'
             }).map(friend=>{
                 const {remark,msg,type}=filterDesc(friend)
+                console.log(222,type)
                 return(
                     <Option key={friend.id} value={friend.id} label={remark}>
                         <StyledOptionInnerBox highlightColor={colorPrimary}>

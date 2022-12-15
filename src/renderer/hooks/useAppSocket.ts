@@ -3,6 +3,8 @@ import {io} from "socket.io-client";
 import {SOCKET_URL} from "@/utils/constant";
 import userStore from "@/stores/user.store";
 import socketStore from "@/stores/socket.store";
+import {useModel} from "foca";
+import {DataType, SocketDataType} from "@/types/socketDataType";
 
 export const useAppSocket = () => {
     useIsomorphicLayoutEffect (()=>{
@@ -26,21 +28,36 @@ export const useAppSocket = () => {
                 console.log(`%c连接出错:`,'background: #596275; color: red;border-radius:10px;padding:10px')
             })
             //监听发送给自己的消息
-            socket.on(`${user.id}`,(data:any)=>{
+            socket.on(`${user.id}`,async (data:string)=>{
+                try {
+                    const {type}=JSON.parse(data) as SocketDataType
+                    switch (type) {
+                        case DataType.updateFriendRecord:{
+                            //提示更新好友请求列表
+                            await userStore.getFriendRequests()
+                            await userStore.getFriendsList({})
+                            break
+                        }
+                    }
+                }catch (e) {
+                    console.log("socket传过来的data解析失败:",data)
+                    throw e
+                }
                 console.log("我收到的消息:",JSON.parse(data))
+            })
+            socket.on(`message`,(data:any)=>{
+                console.log("我收到的消息:",JSON.parse(data))
+                socket.emit(`name`,"xxxx")
+            })
+            socket.on(`name`,(data:any)=>{
+
+                console.log(`name`,data)
             })
             socketStore.updateState({socket:socket})
         }
 
         return ()=>{
-            const _socket = socketStore.state.socket
-            if(_socket){
-                if (_socket.connected){
-                    _socket.disconnect()
-                    _socket.close()
-                    socketStore.updateState({socket:null})
-                }
-            }
+            socketStore.clear()
         }
     },[])
 }

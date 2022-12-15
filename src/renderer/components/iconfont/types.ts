@@ -18,4 +18,6 @@ export enum IconType {
     meeting="icon-shipin",
     addAccount="icon-add-account",
     add="icon-add",
+    addGroups="icon-tianjiaqunzu",
+    userFriends="icon-user-friends",
 }

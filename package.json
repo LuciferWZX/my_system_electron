@@ -26,6 +26,7 @@
     "cross-env": "^7.0.3",
     "electron-store": "^8.1.0",
     "foca": "^1.2.1",
+    "framer-motion": "^7.9.1",
     "jwt-decode": "^3.1.2",
     "mac-scrollbar": "^0.10.4",
     "node-fetch": "^3.3.0",

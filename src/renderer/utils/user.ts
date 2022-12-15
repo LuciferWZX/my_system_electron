@@ -8,6 +8,8 @@ import {removeLocal} from "@/utils/store";
 export const clearUserInfo = async () => {
   //删除localStorage
   removeLocal(StorageKey.token)
+  //先清除socket
+
   //重置用户的store数据
   store.refresh()
 

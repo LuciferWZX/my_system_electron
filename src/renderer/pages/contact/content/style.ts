@@ -19,4 +19,10 @@ export const StyledInfoBox = styled.div`
   .ant-descriptions-item-content{
     display: unset!important;
   }
+  .success-btn{
+    background-color: #00b96b;
+    :hover{
+      background-color: #00b96b;
+    }
+  }
 `

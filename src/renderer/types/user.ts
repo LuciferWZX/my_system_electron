@@ -29,6 +29,35 @@ export interface Friend{
   deletedId: null|string,
   friendInfo: FriendInfo
 }
+export enum DeletedRecordStatusType {
+  NotDeleted = 0, //两者都没有删除这个记录
+  SenderDeleted = 1, //发送者删除这个记录
+  ReceiverDeleted = 2, //接收者删除这个记录
+  BothDeleted = 3, //都删除这个记录
+}
+export enum ResponseStatusType {
+  Refused = 0, //以拒绝
+  Accepted = 1, //已接受
+  Handling = 2, //处理中
+}
+export interface FriendRequestRecord {
+  createdDate:string
+  deleteStatus:DeletedRecordStatusType
+  denialReason:string|null
+  id:string
+  receiverId:string
+  responseStatus:ResponseStatusType
+  senderDesc:string|null
+  senderId:string
+  senderRemark:string|null
+  updatedDate:string
+  friendInfo:{
+    avatar:string
+    id:string
+    nickname:string
+    username:string
+  }
+}
 export interface FriendInfo{
   id: string,
   avatar: string,

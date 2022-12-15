@@ -5,6 +5,7 @@ interface IModal {
   settingKey:string
   closeWinTypeVisible:boolean
   addFriendsVisible:boolean
+  friendsRequestVisible:boolean
   userDetailVisible:boolean
   detailUser:User|null
 }
@@ -14,6 +15,7 @@ const initialState:IModal = {
     closeWinTypeVisible:false,
     addFriendsVisible:false,
     userDetailVisible:false,
+    friendsRequestVisible:false,
     detailUser:null
 }
 const modalStore = defineModel('modal', {

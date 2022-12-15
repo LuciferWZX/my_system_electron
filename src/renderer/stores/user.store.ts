@@ -1,21 +1,30 @@
 import {defineModel} from "foca";
-import {Friend, User} from "@/types/user";
+import {Friend, FriendRequestRecord, ResponseStatusType, User} from "@/types/user";
 import {phoneLogin} from "@/services/user";
 import {ResponseCode, ResponseResult} from "@/types/ResponseResult";
 import {setLocal} from "@/utils/store";
 import {AppStorageKey, StorageKey} from "@/types/storageKey";
-import {getFriendsList, modifyFriendRemark, searchUsers} from "@/services/friends";
+import {
+    getFriendRequests,
+    getFriendsList,
+    handleFriendRequest,
+    modifyFriendRemark,
+    searchUsers,
+    sendRequest
+} from "@/services/friends";
 
 interface IUser {
   user:User|null
     friends:Friend[]
     searchUsers:User[]
+    friendsRequests:FriendRequestRecord[],
     contactId:string
 }
 const initialState:IUser = {
   user:null,
     friends:[],
     searchUsers:[],
+    friendsRequests:[],
     contactId:""
 }
 const userStore = defineModel('user', {
@@ -102,6 +111,46 @@ const userStore = defineModel('user', {
                 this.updateState({searchUsers:result.data})
             }
             return result
+        },
+        /**
+         * 发送好友请求
+         * @param data
+         */
+        async sendRequest(data:{fid:string,senderDesc?:string,senderRemark?:string}){
+            const result:ResponseResult<FriendRequestRecord> = await sendRequest(data)
+
+            if(result.code === ResponseCode.success){
+                await this.getFriendRequests()
+            }
+            return result
+        },
+        /**
+         * 获取好友请求列表
+         */
+        async getFriendRequests(){
+            const result:ResponseResult<FriendRequestRecord[]> =await getFriendRequests()
+            if(result.code === ResponseCode.success){
+                this.updateState({friendsRequests:result.data})
+            }
+            return result
+        },
+
+        /**
+         * 处理好友请求
+         * @param data
+         */
+        async handleFriendRequest(data:{
+            fRecordId: string;
+            fid: string;
+            status: ResponseStatusType;
+            senderRemark?: string;
+        }){
+            const response:ResponseResult<any> = await handleFriendRequest(data)
+            if(response.code === ResponseCode.success){
+                await userStore.getFriendRequests()
+                await userStore.getFriendsList({})
+            }
+            return response
         }
   }
 });

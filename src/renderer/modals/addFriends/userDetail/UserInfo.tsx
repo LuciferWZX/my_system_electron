@@ -1,9 +1,13 @@
 import React, {FC, useState} from "react";
-import {Avatar, Button, Descriptions, Divider, Input, Space, Spin, Typography} from "antd";
+import {Avatar, Button, Descriptions, Divider, Input, message, Space, Spin, Typography} from "antd";
 import {User} from "@/types/user";
 import styled from "styled-components";
 import {useModel} from "foca";
 import userStore from "@/stores/user.store";
+import {useBoolean, useRequest} from "ahooks";
+import {ResponseCode} from "@/types/ResponseResult";
+import {IconFont, IconType} from "@/components";
+import classnames from "classnames";
 
 
 
@@ -12,13 +16,33 @@ interface IProps{
     user:User
 }
 const UserInfo:FC<IProps> = (props) => {
-    const curUser = useModel(userStore,state => state.user)
     const {user}=props
+    const [messageApi, contextHolder] = message.useMessage();
+    const curUser = useModel(userStore,state => state.user)
+    const [isSuccess,{set:setIsSuccess}]=useBoolean(false)
     const [remark,setRemark]=useState<string>(user.nickname)
     const [senderDesc,setSenderDesc]=useState<string>(`我是 ${curUser?.nickname}`)
-
+    const {runAsync,loading}=useRequest(userStore.sendRequest,{
+        manual:true,
+        debounceWait:300
+    })
+    const sendRequest=async ()=>{
+        if(!isSuccess){
+            const result =await runAsync({
+                fid:user.id,
+                senderDesc:senderDesc,
+                senderRemark:remark
+            })
+            if(result.code === ResponseCode.success){
+                setIsSuccess(true)
+            }else{
+                messageApi.error({content:result.message,key:'error'})
+            }
+        }
+    }
     return(
         <StyledInfoBox>
+            {contextHolder}
             <Descriptions
                 column={1}
                 size={"small"}
@@ -42,7 +66,14 @@ const UserInfo:FC<IProps> = (props) => {
                 </Descriptions.Item>
             </Descriptions>
             <Divider plain>
-                <Button type={"primary"}>添加</Button>
+                <Button
+                    onClick={sendRequest}
+                    icon={isSuccess && <IconFont type={IconType.check}/>}
+                    className={classnames({"success-btn":isSuccess})}
+                    type={"primary"}
+                    loading={loading}>
+                    {isSuccess?"已发送":"发送请求"}
+                </Button>
             </Divider>
         </StyledInfoBox>
     )
@@ -55,5 +86,11 @@ const StyledInfoBox = styled.div`
   height: 300px;
   .ant-descriptions-item-content{
     display: unset!important;
+  }
+  .success-btn{
+    background-color: #00b96b;
+    :hover{
+      background-color: #00b96b;
+    }
   }
 `
