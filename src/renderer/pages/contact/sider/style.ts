@@ -6,7 +6,7 @@ export const StyledContactSider = styled.div`
   width: 260px;
   display: flex;
   flex-direction: column;
-  //overflow: auto;
+  //overflow: hidden;
   border-radius: 4px;
   
 

@@ -1,12 +1,13 @@
 import React, {FC} from "react";
 import {StyledSiderContent} from "@/pages/contact/sider/siderContent/style";
-import {Avatar, Collapse, List, Space, theme,Typography} from "antd";
+import {Avatar, Collapse, List, Space, theme, Typography} from "antd";
 import classnames from "classnames";
 import {MacScrollbar} from "mac-scrollbar";
 import {useModel} from "foca";
 import userStore from "@/stores/user.store";
 import {IconFont, IconType} from "@/components";
 import {FriendRequestRecord, ResponseStatusType} from "@/types/user";
+
 const { Panel } = Collapse;
 const {Text}=Typography
 const SiderContent:FC = () => {
@@ -15,6 +16,7 @@ const SiderContent:FC = () => {
         friendsRequests:state.friendsRequests,
         contactId:state.contactId
     }))
+    const handleRequestCount = friendsRequests.filter(fq=>fq.responseStatus === ResponseStatusType.Handling).length
     const {
         token,
     } = theme.useToken();
@@ -71,7 +73,7 @@ const SiderContent:FC = () => {
                         showArrow={false}
                         className={'custom-panel'}
                         header={<Space><IconFont type={IconType.addGroups}/><Text>新朋友</Text></Space>}
-                        extra={<Text strong={true}>{22}</Text>}
+                        extra={<Text strong={true}>{handleRequestCount}</Text>}
                         key="friends-request">
                         <List
                             style={{padding:5}}
@@ -79,7 +81,7 @@ const SiderContent:FC = () => {
                             dataSource={friendsRequests}
                             renderItem={(item) => {
                                 const {msg} = formatRecordMsg(item)
-                                const {friendInfo,responseStatus}=item
+                                const {friendInfo}=item
 
                                 return(
                                     <List.Item
@@ -113,7 +115,6 @@ const SiderContent:FC = () => {
                             itemLayout="horizontal"
                             dataSource={friends}
                             renderItem={(item) => {
-                                console.log(11111,item)
                                 const {senderId,friendInfo,senderRemark,receiverRemark}=item
                                 const remark = senderId === friendInfo.id?receiverRemark:senderRemark;
                                 return(

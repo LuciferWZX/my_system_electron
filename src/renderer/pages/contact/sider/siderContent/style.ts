@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const StyledSiderContent = styled.div<{$hoverBg:string,$activeBg:string}>`
   flex: 1;
+  overflow: hidden;
+  .mac-scroll-bar{
+    height: 100%;
+    overflow: auto;
+  }
   .custom-collapse{
     border-radius: 0;
     border: none;
@@ -18,10 +23,7 @@ export const StyledSiderContent = styled.div<{$hoverBg:string,$activeBg:string}>
       margin-inline-start: 0;
     }
   }
-  .mac-scroll-bar{
-    height: 100%;
-    overflow: auto;
-  }
+  
   .friends-list{
     padding: 10px;
     cursor: pointer;
