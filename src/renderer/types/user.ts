@@ -71,3 +71,8 @@ export interface FriendInfo{
   sex: 1|2,
   banned: boolean
 }
+export enum LoginDevice {
+  App,
+  Web,
+  Mobile,
+}

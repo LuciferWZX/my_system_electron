@@ -39,7 +39,7 @@ const HeaderAvatar:FC<IProps> = (props) => {
     const logout=useMemoizedFn(async ()=>{
         setTimeout(()=>{
             clearUserInfo()
-        },800)
+        },400)
     })
     const items:MenuProps['items']=[
         { label: '账号设置', key: 'account-setting',icon:<SettingFilled/>, }, // 菜单项务必填写 key

@@ -8,6 +8,7 @@ interface IModal {
   friendsRequestVisible:boolean
   userDetailVisible:boolean
   detailUser:User|null
+  forceLogoutVisible:boolean
 }
 const initialState:IModal = {
     settingVisible:false,
@@ -16,7 +17,8 @@ const initialState:IModal = {
     addFriendsVisible:false,
     userDetailVisible:false,
     friendsRequestVisible:false,
-    detailUser:null
+    detailUser:null,
+    forceLogoutVisible:false
 }
 const modalStore = defineModel('modal', {
     initialState,

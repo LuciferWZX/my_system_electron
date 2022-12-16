@@ -1,12 +1,13 @@
 import {useIsomorphicLayoutEffect} from "ahooks";
 import {io} from "socket.io-client";
-import {SOCKET_URL} from "@/utils/constant";
+import {LOGIN_DEVICE, SOCKET_URL} from "@/utils/constant";
 import userStore from "@/stores/user.store";
 import socketStore from "@/stores/socket.store";
 import {useModel} from "foca";
 import {DataType, SocketDataType} from "@/types/socketDataType";
+import {clearUserInfo} from "@/utils/user";
 
-export const useAppSocket = () => {
+export const useAppSocket = (forceLogin:()=>void) => {
     useIsomorphicLayoutEffect (()=>{
         const user = userStore.state.user
         if(user){
@@ -29,8 +30,9 @@ export const useAppSocket = () => {
             })
             //监听发送给自己的消息
             socket.on(`${user.id}`,async (data:string)=>{
+                console.log("接收到数据",data)
                 try {
-                    const {type}=JSON.parse(data) as SocketDataType
+                    const {type,data:remoteData}=JSON.parse(data) as SocketDataType
                     switch (type) {
                         case DataType.updateFriendRecord:{
                             //提示更新好友请求列表
@@ -38,6 +40,15 @@ export const useAppSocket = () => {
                             await userStore.getFriendsList({})
                             break
                         }
+                        case DataType.forceLogout:{
+                            if (remoteData.type===LOGIN_DEVICE){
+                                await clearUserInfo()
+                                forceLogin?.()
+                            }
+
+                            break
+                        }
+
                     }
                 }catch (e) {
                     console.log("socket传过来的data解析失败:",data)

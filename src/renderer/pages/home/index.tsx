@@ -1,15 +1,16 @@
 import React, {FC} from "react";
 import {Button, message} from "antd";
+import {StyledHome} from "@/pages/home/style";
 
 
 
 
 const HomePage:FC = () => {
     return(
-        <div id={'xxx'}>
+        <StyledHome>
             <Button onClick={()=> {message.success("xxx",0)}}>跳转</Button>
             HomePage
-        </div>
+        </StyledHome>
     )
 }
 export default HomePage
