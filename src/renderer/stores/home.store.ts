@@ -3,7 +3,6 @@ import { FriendInfo} from "@/types/user";
 
 
 interface IHome {
-
     conversationList:FriendInfo[]
 }
 const initialState:IHome = {
