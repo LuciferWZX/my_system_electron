@@ -1,12 +1,14 @@
 import {defineModel} from "foca";
-import { FriendInfo} from "@/types/user";
+import {Conversation, FriendInfo} from "@/types/user";
 
 
 interface IHome {
-    conversationList:FriendInfo[]
+    conversationList:Conversation[],
+    currentId:string
 }
 const initialState:IHome = {
-    conversationList:[]
+    conversationList:[],
+    currentId:""
 }
 const homeStore = defineModel('home', {
     initialState,
@@ -18,5 +20,8 @@ const homeStore = defineModel('home', {
             return this.initialState;
         },
     },
+    methods:{
+        async getConversations(){}
+    }
 });
 export default homeStore

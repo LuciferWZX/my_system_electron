@@ -1,10 +1,14 @@
 import React, {FC, useState} from "react";
 import {StyledInfoBox} from "@/pages/contact/content/style";
 import {Avatar, Button, Descriptions, Divider, Space, Spin, Typography} from "antd";
-import {Friend, FriendInfo} from "@/types/user";
+import {Conversation, Friend, FriendInfo} from "@/types/user";
 import {history} from "umi";
 import {useBoolean, useIsomorphicLayoutEffect, useRequest} from "ahooks";
 import userStore from "@/stores/user.store";
+import {setLocal} from "@/utils/store";
+import {StorageKey} from "@/types/storageKey";
+import {updateConversations} from "@/utils/conversations";
+import dayjs from "dayjs";
 
 
 
@@ -28,13 +32,19 @@ const UserInfo:FC<IProps> = (props) => {
         return friend.receiverRemark
     }
     const makeConversation=async ()=>{
-        if(window.app_store){
-            const {updateStore}=window.app_store
-            if(updateStore){
-                await updateStore("conversations",friend.id,friendInfo)
-                history.push("/home",{currentId:friend.id})
-            }
+        console.log(123,friend)
+        console.log(234,friendInfo)
+        const conversation:Conversation = {
+            id:friend.id,
+            remark:remark ?? friendInfo.nickname,
+            friendInfo:friendInfo,
+            lastMsgTime:dayjs().format(),
+            unread:0,
+            isMute:false,
+            isOnline:false
         }
+        await updateConversations(conversation,{updateId:friend.id})
+        history.push("/home",{currentId:friend.id})
     }
     return(
         <StyledInfoBox>

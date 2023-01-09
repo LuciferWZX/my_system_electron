@@ -58,6 +58,15 @@ export interface FriendRequestRecord {
     username:string
   }
 }
+export interface Conversation{
+  id:string
+  remark:string
+  friendInfo:FriendInfo,
+  lastMsgTime:string,
+  unread:number,
+  isMute:boolean,
+  isOnline:boolean
+}
 export interface FriendInfo{
   id: string,
   avatar: string,

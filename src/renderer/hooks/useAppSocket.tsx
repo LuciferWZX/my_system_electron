@@ -24,17 +24,17 @@ export const useAppSocket = (forceLogin:()=>void,message:MessageInstance) => {
             })
             socket.on("connect",()=>{
                 console.log(`%c已连接:${socket.id}`,'background: #546de5; color: #bada55;border-radius:10px;padding:10px')
-                socketStore.updateState({changedStatus:!socketStore.state.changedStatus})
+                socketStore.updateState({changedStatus:true})
                 message.open({type:"success",content:"已连接服务器",key:"socket_key",duration:2,icon:<IconFont type={IconType.success}  />})
             })
             socket.on("disconnect",(d)=>{
                 console.log(`%c已断开连接:${d}`,'background: #596275; color: #bada55;border-radius:10px;padding:10px')
-                socketStore.updateState({changedStatus:!socketStore.state.changedStatus})
+                socketStore.updateState({changedStatus:false})
                 message.open({type:"error",content:"已断开连接",key:"socket_key",duration:0,icon:<IconFont type={IconType.error}/>})
             })
             socket.on("connect_error",()=>{
                 console.log(`%c连接出错:`,'background: #596275; color: red;border-radius:10px;padding:10px')
-                socketStore.updateState({changedStatus:!socketStore.state.changedStatus})
+                socketStore.updateState({changedStatus:false})
                 message.open({type:"error",content:"连接出错",key:"socket_key",duration:0,icon:<IconFont type={IconType.error}/>})
             })
             //监听发送给自己的消息

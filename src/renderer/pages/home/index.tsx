@@ -1,8 +1,9 @@
 import React, {FC} from "react";
-import {Button, message} from "antd";
 import {StyledHome} from "@/pages/home/style";
-import {useLocation} from "umi";
 import {useConversation} from "@/pages/home/useConversation";
+import {Panel} from "react-resizable-panels";
+import ConversationSider from "@/pages/home/conversationSider";
+import ResizeHandle from "@/pages/home/ResizeHandle";
 
 
 
@@ -11,9 +12,15 @@ const HomePage:FC = () => {
     useConversation()
 
     return(
-        <StyledHome>
-            <Button onClick={()=> {message.success("xxx",0)}}>跳转</Button>
-            HomePage
+        <StyledHome direction={"horizontal"}>
+
+            <Panel collapsible={true} style={{maxWidth:300}}>
+                <ConversationSider/>
+            </Panel>
+            <ResizeHandle className={'handle-bar'}/>
+            <Panel minSize={30} style={{backgroundColor:"orange"}}>
+                middle
+            </Panel>
         </StyledHome>
     )
 }
