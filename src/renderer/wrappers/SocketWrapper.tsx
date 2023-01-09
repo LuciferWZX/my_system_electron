@@ -1,10 +1,11 @@
 import React, {FC} from "react";
 import {Outlet} from "umi";
 import {useAppSocket} from "@/hooks/useAppSocket";
-import {Modal,Typography} from "antd";
+import {message, Modal, Typography} from "antd";
 
 const {Text}=Typography
 const SocketWrapper:FC = () => {
+    const [messageApi, contextHolder] = message.useMessage();
     useAppSocket(()=>{
         Modal.info({
             centered:true,
@@ -17,10 +18,14 @@ const SocketWrapper:FC = () => {
             ),
             okText:"知道了",
             onOk() {},
-        });
-    })
+        })
+    },messageApi)
     return (
-        <Outlet/>
+        <>
+            {contextHolder}
+            <Outlet/>
+        </>
+
     )
 }
 export default SocketWrapper

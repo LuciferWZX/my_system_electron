@@ -7,6 +7,7 @@ import userStore from "@/stores/user.store";
 import {IconFont, IconType} from "@/components";
 import { useMemoizedFn} from "ahooks";
 import {clearUserInfo} from "@/utils/user";
+import socketStore from "@/stores/socket.store";
 
 const { Text } = Typography;
 interface IProps {
@@ -19,7 +20,7 @@ const HeaderAvatar:FC<IProps> = (props) => {
         phone:state.user?.phone ?? "",
         nickname:state.user?.nickname ?? ""
     }))
-
+    const isSocketConnected = useModel(socketStore,state => state.socket?.connected)
     const confirmLogout=()=>{
         modal.confirm({
             title: '退出登录?',
@@ -72,7 +73,7 @@ const HeaderAvatar:FC<IProps> = (props) => {
               //     </div>
               // )}
           >
-              <Badge dot status="success" offset={[-5, 36]}>
+              <Badge dot status={isSocketConnected?"success":"error"} offset={[-5, 36]}>
                   <Avatar size={32} draggable={false}
                           src={avatar}  />
               </Badge>

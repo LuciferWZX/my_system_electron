@@ -3,9 +3,11 @@ import {Socket} from "socket.io-client";
 
 interface ISocket {
     socket:Socket|null
+    changedStatus:boolean
 }
 const initialState:ISocket = {
-    socket:null
+    socket:null,
+    changedStatus:false
 }
 const socketStore = defineModel('socket', {
     initialState,

@@ -21,7 +21,9 @@ const SiderContent:FC = () => {
         token,
     } = theme.useToken();
     const selectedContactId=(id:string)=>{
-        userStore.updateState({contactId:id})
+        if (id!==contactId){
+            userStore.updateState({contactId:id})
+        }
     }
     const formatRecordMsg=(record:FriendRequestRecord)=>{
         const {senderId,friendInfo,receiverId,responseStatus}=record

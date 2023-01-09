@@ -2,6 +2,7 @@ import React, {FC, useState} from "react";
 import {StyledInfoBox} from "@/pages/contact/content/style";
 import {Avatar, Button, Descriptions, Divider, Space, Spin, Typography} from "antd";
 import {Friend, FriendInfo} from "@/types/user";
+import {history} from "umi";
 import {useBoolean, useIsomorphicLayoutEffect, useRequest} from "ahooks";
 import userStore from "@/stores/user.store";
 
@@ -26,7 +27,15 @@ const UserInfo:FC<IProps> = (props) => {
         }
         return friend.receiverRemark
     }
-
+    const makeConversation=async ()=>{
+        if(window.app_store){
+            const {updateStore}=window.app_store
+            if(updateStore){
+                await updateStore("conversations",friend.id,friendInfo)
+                history.push("/home",{currentId:friend.id})
+            }
+        }
+    }
     return(
         <StyledInfoBox>
             <Descriptions
@@ -47,7 +56,7 @@ const UserInfo:FC<IProps> = (props) => {
 
             </Descriptions>
             <Divider plain>
-                <Button type={"primary"}>发消息</Button>
+                <Button type={"primary"} onClick={makeConversation}>发消息</Button>
             </Divider>
         </StyledInfoBox>
     )

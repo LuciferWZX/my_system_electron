@@ -1,8 +1,9 @@
 import {ResponseError} from "umi-request";
 import {message} from "antd";
+import {clearUserInfo} from "@/utils/user";
 
-const errorHandle=(error:ResponseError)=>{
-  console.log(111,error)
+const errorHandle=async (error:ResponseError)=>{
+
   if(typeof error.data === "string"){
     const response = error.response as Response
 
@@ -13,6 +14,12 @@ const errorHandle=(error:ResponseError)=>{
     }
   }
   if(error.response){
+    const status = error.response.status
+    switch (status) {
+      case 401:{
+        await clearUserInfo()
+      }
+    }
     if (error.data?.message){
       //message.error({content:error.data.message,key:'error'})
     }

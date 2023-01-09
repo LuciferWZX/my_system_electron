@@ -15,8 +15,9 @@ export default (request:RequestMethod<false>)=>{
       options
     }
   })
-  request.interceptors.response.use((response) => {
-    return response.clone().json();
-  });
+  // request.interceptors.response.use((response) => {
+  //   console.log(111,response)
+  //   return response.clone().json();
+  // });
 
 }

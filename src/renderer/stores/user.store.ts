@@ -89,7 +89,7 @@ const userStore = defineModel('user', {
             if(result.code === ResponseCode.success){
                 this.updateState({
                     friends:this.state.friends.map(friend=>{
-                        if(friend.id === result.data.id){
+                        if(friend.id === data.id){
                             return {
                                 ...result.data,
                                 friendInfo:friend.friendInfo
