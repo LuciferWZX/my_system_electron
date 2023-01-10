@@ -39,6 +39,7 @@ const UserInfo:FC<IProps> = (props) => {
             remark:remark ?? friendInfo.nickname,
             friendInfo:friendInfo,
             lastMsgTime:dayjs().format(),
+            lastMsg:"",
             unread:0,
             isMute:false,
             isOnline:false

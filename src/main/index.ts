@@ -26,8 +26,8 @@ if (!gotTheLock) {
 
   const createWindow=(store:Store):BrowserWindow=>{
     const win = new BrowserWindow({
-      minWidth: 700,
-      minHeight: 500,
+      minWidth: 960,
+      minHeight: 600,
       frame:false,
       show:false,
       titleBarStyle:"hidden",

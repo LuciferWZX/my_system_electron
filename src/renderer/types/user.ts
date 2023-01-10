@@ -63,6 +63,7 @@ export interface Conversation{
   remark:string
   friendInfo:FriendInfo,
   lastMsgTime:string,
+  lastMsg:string,
   unread:number,
   isMute:boolean,
   isOnline:boolean

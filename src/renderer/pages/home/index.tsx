@@ -14,11 +14,11 @@ const HomePage:FC = () => {
     return(
         <StyledHome direction={"horizontal"}>
 
-            <Panel collapsible={true} style={{maxWidth:300}}>
+            <Panel collapsible={true} minSize={30} defaultSize={35}>
                 <ConversationSider/>
             </Panel>
             <ResizeHandle className={'handle-bar'}/>
-            <Panel minSize={30} style={{backgroundColor:"orange"}}>
+            <Panel minSize={50} style={{backgroundColor:"orange"}}>
                 middle
             </Panel>
         </StyledHome>
